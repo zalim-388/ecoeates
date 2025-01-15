@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecoeates/items.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,105 +17,298 @@ class _HomePageState extends State<HomePage> {
     'image/good-food-fresh-and-healthy-farm.png',
   ];
 
+  final List<Map<String, String>> categories = [
+    {"name": "Veggies", "image": "image/veg image 1.png"},
+    {"name": "Fruits", "image": "image/fruits 1.png"},
+    {"name": "Nuts", "image": "image/nuts 1.png"},
+    {
+      "name": "Meats",
+      "image": "image/meat 1.png",
+    },
+    {
+      "name": "Beverages",
+      "image": "image/pngfuel 6 (1).png",
+    },
+    {
+      "name": "Snacks",
+      "image": "image/pngfuel 6.pngrt",
+    },
+    {
+      "name": "Dairys",
+      "image": "image/Group 6837.png",
+    }
+  ];
+
+  final List<Map<String, String>> Veggies = [
+    {
+      "name": "tomato",
+      "image": "image/tomato 2.png",
+      "price": "30/kg",
+    },
+    {
+      "name": "onian",
+      "image": "image/onian 2.png",
+      "price": "28/kg",
+    },
+    {
+      "name": "Garlic",
+      "image": "image/veluthulli 1.png",
+      "price": "52/kg",
+    },
+    {
+      "name": "ladyiesfingers",
+      "image": "image/vendakka 1.png",
+      "price": "19/kg",
+    },
+    {
+      "name": "geen chilly",
+      "image": "image/green-chilly 1.png",
+      "price": "25/kg",
+    },
+    {
+      "name": "cabbage",
+      "image": "image/cabbage 1.png",
+      "price": "32/kg",
+    },
+    {
+      "name": "carrot",
+      "image": "image/karrot 1.png",
+      "price": "38/kg",
+    },
+    {
+      "name": "potato",
+      "image": "image/potato 1.png",
+      "price": "35/kg",
+    },
+  ];
+
+  final List<Map<String, String>> Fruits = [
+    {
+      "name": "orange",
+      "image": "image/orange 1.png",
+      "price": "90/kg",
+    },
+    {
+      "name": "watermelon",
+      "image": "image/watermelon 1.png",
+      "price": "32/kg",
+    },
+    {
+      "name": "apple",
+      "image": "image/unsplash_JV8PcTEK4R0.png",
+      "price": "110/kg",
+    },
+    {
+      "name": "pinapple",
+      "image": "image/unsplash_1ylFhXqy058.png",
+      "price": "52/kg",
+    },
+    {
+      "name": "banana",
+      "image": "image/unsplash_e49C0XDnZM0.png",
+      "price": "45/kg",
+    },
+    {
+      "name": "grape",
+      "image": "image/unsplash_qtwlKiu6VHg.png",
+      "price": "70/kg",
+    },
+    {
+      "name": "Strawberry ",
+      "image": "image/unsplash_ww-40NflRjA.png",
+      "price": "150/kg",
+    },
+    {
+      "name": "mango",
+      "image": "image/mango 1.png",
+      "price": "75",
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> imageSliders = imgList
         .map((item) => ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(item),
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                item,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
             ))
         .toList();
+
     return Scaffold(
-        body: Container(
-      height: double.infinity,
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('image/Splash screen Page.png'),
-          fit: BoxFit.cover,
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('image/Splash screen Page.png'),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 40,
-            ),
-            Row(
-              children: [
-                IconButton(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 40),
+
+              Row(
+                children: [
+                  IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     icon: CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 30,
-                        child: Icon(
-                          Icons.arrow_back_ios_new_outlined,
-                          color: Colors.purple.shade900,
-                        ))),
-                SizedBox(
-                  width: 10,
-                ),
-                IconButton(
+                      backgroundColor: Colors.white,
+                      radius: 30,
+                      child: Icon(
+                        Icons.arrow_back_ios_new_outlined,
+                        color: Colors.purple.shade900,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.location_on_outlined,
                       color: Colors.white,
-                    )),
-                Text(
-                  'Location \n Malappuram,Kerala',
-                  style: TextStyle(fontSize: 17, color: Colors.white),
-                ),
-                SizedBox(
-                  width: 35,
-                ),
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 30,
-                        child: Icon(
-                          Icons.menu_rounded,
-                          color: Colors.purple.shade900,
-                        ))),
-              ],
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.purple.shade900,
+                    ),
                   ),
-                  hintText: 'Search Groceries',
-                  hintStyle: TextStyle(color: Colors.purple.shade900),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(
-                        20,
-                      )),
-                  filled: true,
-                  fillColor: Colors.white),
-            ),
-            SizedBox(height: 16),
-            CarouselSlider(
-              items: imageSliders,
-              options: CarouselOptions(
-                autoPlay: true,
-                enlargeCenterPage: true,
-                aspectRatio: 2.0,
+                  const Text(
+                    'Location \n Malappuram, Kerala',
+                    style: TextStyle(fontSize: 17, color: Colors.white),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 30,
+                      child: Icon(
+                        Icons.menu_rounded,
+                        color: Colors.purple.shade900,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: 16),
-          ],
+              const SizedBox(height: 25),
+              // Search Bar
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: TextField(
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.purple.shade900,
+                    ),
+                    hintText: 'Search Groceries',
+                    hintStyle: TextStyle(color: Colors.purple.shade900),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 35),
+
+              Container(
+                padding: const EdgeInsets.all(16),
+                height: 700,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CarouselSlider(
+                      items: imageSliders,
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        aspectRatio: 2.0,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Categories',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      height: 120,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: categories.length,
+                        itemBuilder: (context, index) {
+                          final item = categories[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Items(),
+                                        ));
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    radius: 35,
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.deepPurpleAccent,
+                                      radius: 30,
+                                      child: Image.asset(
+                                        item['image'] ?? '',
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  item['name'] ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Popular',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }

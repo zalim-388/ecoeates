@@ -1,4 +1,5 @@
 import 'package:ecoeates/Home_Page.dart';
+import 'package:ecoeates/bottomnav.dart';
 import 'package:flutter/material.dart';
 
 class Loginpage extends StatefulWidget {
@@ -73,7 +74,7 @@ class _LoginpageState extends State<Loginpage> {
                   height: 40,
                 ),
                 GestureDetector(onTap:  () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Bottomnav(),));
                 },
                   child: Container(
                     height: 60,
