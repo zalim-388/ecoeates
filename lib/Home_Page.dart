@@ -17,9 +17,110 @@ class _HomePageState extends State<HomePage> {
     'image/good-food-fresh-and-healthy-farm.png',
   ];
 
-  final List<Map<String, String>> categories = [
-    {"name": "Veggies", "image": "image/veg image 1.png"},
-    {"name": "Fruits", "image": "image/fruits 1.png"},
+// List<Map<String, String>> sampleItems = [
+//   {'name': 'Tomato', 'price': '\$2', 'image': 'assets/tomato.png'},
+//   {'name': 'Potato', 'price': '\$1.5', 'image': 'assets/potato.png'},
+// ];
+
+// Items(
+//   categories: 'Veggies',
+//   Item: sampleItems,
+// );
+
+
+  final List<Map<String, dynamic>> categories = [
+    {
+      "name": "Veggies",
+      "image": "image/veg image 1.png",
+      "Items": [
+        {
+          "name": "tomato",
+          "image": "image/tomato 2.png",
+          "price": "₹30/kg",
+        },
+        {
+          "name": "onian",
+          "image": "image/onian 2.png",
+          "price": "₹28/kg",
+        },
+        {
+          "name": "Garlic",
+          "image": "image/veluthulli 1.png",
+          "price": "₹52/kg",
+        },
+        {
+          "name": "ladyiesfingers",
+          "image": "image/vendakka 1.png",
+          "price": "₹19/kg",
+        },
+        {
+          "name": "geen chilly",
+          "image": "image/green-chilly 1.png",
+          "price": "₹25/kg",
+        },
+        {
+          "name": "cabbage",
+          "image": "image/cabbage 1.png",
+          "price": "₹32/kg",
+        },
+        {
+          "name": "carrot",
+          "image": "image/karrot 1.png",
+          "price": "₹38/kg",
+        },
+        {
+          "name": "potato",
+          "image": "image/potato 1.png",
+          "price": "₹35/kg",
+        },
+      ]
+    },
+    {
+      "name": "Fruits",
+      "image": "image/fruits 1.png",
+      "Items": [
+        {
+          "name": "orange",
+          "image": "image/orange 1.png",
+          "price": "₹90/kg",
+        },
+        {
+          "name": "watermelon",
+          "image": "image/watermelon 1.png",
+          "price": "₹32/kg",
+        },
+        {
+          "name": "apple",
+          "image": "image/unsplash_JV8PcTEK4R0.png",
+          "price": "₹110/kg",
+        },
+        {
+          "name": "pinapple",
+          "image": "image/unsplash_1ylFhXqy058.png",
+          "price": "₹52/kg",
+        },
+        {
+          "name": "banana",
+          "image": "image/unsplash_e49C0XDnZM0.png",
+          "price": "₹45/kg",
+        },
+        {
+          "name": "grape",
+          "image": "image/unsplash_qtwlKiu6VHg.png",
+          "price": "₹70/kg",
+        },
+        {
+          "name": "Strawberry ",
+          "image": "image/unsplash_ww-40NflRjA.png",
+          "price": "₹150/kg",
+        },
+        {
+          "name": "mango",
+          "image": "image/mango 1.png",
+          "price": "₹75/kg",
+        },
+      ]
+    },
     {"name": "Nuts", "image": "image/nuts 1.png"},
     {
       "name": "Meats",
@@ -37,92 +138,6 @@ class _HomePageState extends State<HomePage> {
       "name": "Dairys",
       "image": "image/Group 6837.png",
     }
-  ];
-
-  final List<Map<String, String>> Veggies = [
-    {
-      "name": "tomato",
-      "image": "image/tomato 2.png",
-      "price": "30/kg",
-    },
-    {
-      "name": "onian",
-      "image": "image/onian 2.png",
-      "price": "28/kg",
-    },
-    {
-      "name": "Garlic",
-      "image": "image/veluthulli 1.png",
-      "price": "52/kg",
-    },
-    {
-      "name": "ladyiesfingers",
-      "image": "image/vendakka 1.png",
-      "price": "19/kg",
-    },
-    {
-      "name": "geen chilly",
-      "image": "image/green-chilly 1.png",
-      "price": "25/kg",
-    },
-    {
-      "name": "cabbage",
-      "image": "image/cabbage 1.png",
-      "price": "32/kg",
-    },
-    {
-      "name": "carrot",
-      "image": "image/karrot 1.png",
-      "price": "38/kg",
-    },
-    {
-      "name": "potato",
-      "image": "image/potato 1.png",
-      "price": "35/kg",
-    },
-  ];
-
-  final List<Map<String, String>> Fruits = [
-    {
-      "name": "orange",
-      "image": "image/orange 1.png",
-      "price": "90/kg",
-    },
-    {
-      "name": "watermelon",
-      "image": "image/watermelon 1.png",
-      "price": "32/kg",
-    },
-    {
-      "name": "apple",
-      "image": "image/unsplash_JV8PcTEK4R0.png",
-      "price": "110/kg",
-    },
-    {
-      "name": "pinapple",
-      "image": "image/unsplash_1ylFhXqy058.png",
-      "price": "52/kg",
-    },
-    {
-      "name": "banana",
-      "image": "image/unsplash_e49C0XDnZM0.png",
-      "price": "45/kg",
-    },
-    {
-      "name": "grape",
-      "image": "image/unsplash_qtwlKiu6VHg.png",
-      "price": "70/kg",
-    },
-    {
-      "name": "Strawberry ",
-      "image": "image/unsplash_ww-40NflRjA.png",
-      "price": "150/kg",
-    },
-    {
-      "name": "mango",
-      "image": "image/mango 1.png",
-      "price": "75",
-    },
   ];
 
   @override
@@ -261,13 +276,15 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
+                                    print( item['name']);
+
+                                    print(item['items']);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => Items(
-                                            name: '',
-                                            image: '',
-                                            price: '',
+                                            categories: item['name'],
+                                            Item: item['Items'],
                                           ),
                                         ));
                                   },
@@ -306,7 +323,6 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-              
                   ],
                 ),
               ),

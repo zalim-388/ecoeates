@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
 
 class Items extends StatefulWidget {
-  final String name;
-  final String image;
-  final String price;
-  const Items(
-      {super.key,
-      required this.name,
-      required this.image,
-      required this.price});
+  final String categories;
+  final List<Map<String, dynamic>> Item;
+
+  const Items({super.key, required this.categories, required this.Item});
 
   @override
   State<Items> createState() => _ItemsState();
 }
 
 class _ItemsState extends State<Items> {
-  // List<Map<String, String>> vegg = [];
+  bool fav = false;
 
-  @override
-  // void initState() {
-  //   super.initState();
-  //   vegg = [
-  //     {"name": widget.name, "image": widget.image, "price": widget.price},
-  //   ];
+  // void favorite() {
+  //   setState(() {
+  //     fav = !fav;
+  //   });
   // }
 
+  Set<String> favoriteItems = {};
+
   Widget build(BuildContext context) {
+    print(" daaaaata${widget.categories}");
+    print(widget.Item);
     return Scaffold(
       body: Container(
           height: double.infinity,
@@ -88,50 +86,129 @@ class _ItemsState extends State<Items> {
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
-              child: GridView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: 8,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 300,
-                    width: 200,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 100,
-                          width: 200,
-                          decoration: BoxDecoration(
-                              color: Colors.purpleAccent,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
+              child: Column(
+                children: [
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: widget.Item.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    itemBuilder: (context, index) {
+                      final vegg = widget.Item[index];
+                      return Container(
+                        height: 300,
+                        width: 200,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(
                             children: [
-                              Image.asset(widget.image),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                height: 100,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                    color: Color(0xFFC3B2FF),
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                          20,
+                                        ),
+                                        topRight: Radius.circular(20))),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 120),
+                                      child: CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor: Colors.white,
+                                        child: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              String itemName =
+                                                  vegg['name'] ?? '';
+                                              if (favoriteItems
+                                                  .contains(itemName)) {
+                                                favoriteItems.remove(itemName);
+                                              } else {
+                                                favoriteItems.add(itemName);
+                                              }
+                                            });
+                                          },
+                                          icon: Icon(
+                                            favoriteItems.contains(
+                                                    vegg['name'] ?? '')
+                                                ? Icons.favorite
+                                                : Icons.favorite_border,
+                                            size: 20,
+                                            color: favoriteItems.contains(
+                                                    vegg['name'] ?? '')
+                                                ? Colors.deepPurpleAccent
+                                                : Color(0xFFC3B2FF),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Image.asset(
+                                      vegg['image'] ?? '',
+                                      height: 60,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  vegg['name'] ?? '',
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.black),
+                                ),
+                              ),
+                              //5star
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  vegg['price'] ?? '',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      color: Colors.purple.shade800),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(left: 120),
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                      color: Colors.deepPurpleAccent,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(13))),
+                                  child: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                      )),
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                        Text(
-                          widget.name,
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Text(
-                          widget.price,
-                          style: TextStyle(fontSize: 17),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                      );
+                    },
+                  ),
+                ],
               ),
-            )
+            ),
           ]))),
     );
   }
