@@ -264,7 +264,11 @@ class _HomePageState extends State<HomePage> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => Items(),
+                                          builder: (context) => Items(
+                                            name: '',
+                                            image: '',
+                                            price: '',
+                                          ),
                                         ));
                                   },
                                   child: CircleAvatar(
@@ -302,6 +306,7 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+              
                   ],
                 ),
               ),
