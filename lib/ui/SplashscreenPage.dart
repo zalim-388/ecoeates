@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:ecoeates/welcomepage.dart';
+import 'package:ecoeates/ui/welcomepage.dart';
 import 'package:flutter/material.dart';
 
 class Splashscreenpage extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:ecoeates/bottomnav.dart';
+import 'package:ecoeates/ui/bottomnav.dart';
 import 'package:flutter/material.dart';
 
 class Loginpage extends StatefulWidget {

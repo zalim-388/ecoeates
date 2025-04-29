@@ -1,10 +1,10 @@
 import 'package:circle_bottom_navigation/circle_bottom_navigation.dart';
 import 'package:circle_bottom_navigation/widgets/tab_data.dart';
-import 'package:ecoeates/Home_Page.dart';
-import 'package:ecoeates/Like_page.dart' as like_page1;
-import 'package:ecoeates/like_page.dart' as like_page2;
-import 'package:ecoeates/cart_page.dart';
-import 'package:ecoeates/profile.dart';
+import 'package:ecoeates/ui/Home_Page.dart';
+import 'package:ecoeates/ui/Like_page.dart';
+
+import 'package:ecoeates/ui/cart_page.dart';
+import 'package:ecoeates/ui/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

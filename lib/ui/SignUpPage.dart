@@ -1,5 +1,5 @@
-import 'package:ecoeates/Home_Page.dart';
-import 'package:ecoeates/Loginpage.dart';
+import 'package:ecoeates/ui/Home_Page.dart';
+import 'package:ecoeates/ui/Loginpage.dart';
 import 'package:flutter/material.dart';
 
 class Signuppage extends StatefulWidget {
