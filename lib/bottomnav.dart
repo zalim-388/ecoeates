@@ -1,7 +1,8 @@
 import 'package:circle_bottom_navigation/circle_bottom_navigation.dart';
 import 'package:circle_bottom_navigation/widgets/tab_data.dart';
 import 'package:ecoeates/Home_Page.dart';
-
+import 'package:ecoeates/Like_page.dart' as like_page1;
+import 'package:ecoeates/like_page.dart' as like_page2;
 import 'package:ecoeates/cart_page.dart';
 import 'package:ecoeates/profile.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,8 @@ class Bottomnav extends StatefulWidget {
 class BottomnavState extends State<Bottomnav> {
   int currentPage = 0;
   final List<Widget> _pages = [
-
-  HomePage(),
+    HomePage(),
+    LikePage(),
     CartPage(),
     Profile(),
   ];
