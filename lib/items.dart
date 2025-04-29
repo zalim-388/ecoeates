@@ -39,16 +39,19 @@ class _ItemsState extends State<Items> {
             const SizedBox(height: 40),
             Row(
               children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 30,
-                    child: Icon(
-                      Icons.arrow_back_ios_new_outlined,
-                      color: Colors.purple.shade900,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 25,
+                      child: Icon(
+                        Icons.arrow_back_ios_new_outlined,
+                        color: Colors.purple.shade900,
+                      ),
                     ),
                   ),
                 ),
@@ -58,21 +61,24 @@ class _ItemsState extends State<Items> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Veggies',
+                    widget.categories,
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
                 SizedBox(
-                  width: 90,
+                  width: 80,
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 30,
-                    child: Icon(
-                      Icons.menu_rounded,
-                      color: Colors.purple.shade900,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 25,
+                      child: Icon(
+                        Icons.menu_rounded,
+                        color: Colors.purple.shade900,
+                      ),
                     ),
                   ),
                 ),
@@ -127,23 +133,20 @@ class _ItemsState extends State<Items> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(left: 120),
-                                      child: CircleAvatar(
-                                        radius: 20,
-                                        backgroundColor: Colors.white,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              String itemName =
-                                                  vegg['name'] ?? '';
-                                              if (favoriteItems
-                                                  .contains(itemName)) {
-                                                favoriteItems.remove(itemName);
-                                              } else {
-                                                favoriteItems.add(itemName);
-                                              }
-                                            });
-                                          },
-                                          icon: Icon(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            String itemName =
+                                                vegg['name'] ?? '';
+                                            if (favoriteItems
+                                                .contains(itemName)) {
+                                              favoriteItems.remove(itemName);
+                                            } else {
+                                              favoriteItems.add(itemName);
+                                            }
+                                          });
+                                        },
+                                        icon: Icon(
                                             favoriteItems.contains(
                                                     vegg['name'] ?? '')
                                                 ? Icons.favorite
@@ -152,14 +155,14 @@ class _ItemsState extends State<Items> {
                                             color: favoriteItems.contains(
                                                     vegg['name'] ?? '')
                                                 ? Colors.deepPurpleAccent
-                                                : Color(0xFFC3B2FF),
-                                          ),
-                                        ),
+                                                : Colors.deepPurple),
                                       ),
                                     ),
-                                    Image.asset(
-                                      vegg['image'] ?? '',
-                                      height: 60,
+                                    Center(
+                                      child: Image.asset(
+                                        vegg['image'] ?? '',
+                                        height: 50,
+                                      ),
                                     ),
                                   ],
                                 ),
