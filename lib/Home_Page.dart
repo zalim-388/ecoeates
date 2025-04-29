@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage> {
 //   Item: sampleItems,
 // );
 
-
   final List<Map<String, dynamic>> categories = [
     {
       "name": "Veggies",
@@ -166,7 +165,9 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 40),
+              const SizedBox(
+                height: 40,
+              ),
 
               Row(
                 children: [
@@ -276,7 +277,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    print( item['name']);
+                                    print(item['name']);
 
                                     print(item['items']);
                                     Navigator.push(
