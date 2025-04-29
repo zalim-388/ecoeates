@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Items extends StatefulWidget {
   final String categories;
@@ -20,6 +23,17 @@ class _ItemsState extends State<Items> {
   // }
 
   Set<String> favoriteItems = {};
+
+  Future<void> savedata(Map<String, String> cart) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    List<String> cartltems = prefs.getStringList("categories") ?? [];
+
+    cartltems.add(jsonEncode(cart));
+
+    prefs.setStringList("categories", cartltems);
+    print("r${cartltems}");
+  }
 
   Widget build(BuildContext context) {
     print(" daaaaata${widget.categories}");
@@ -196,7 +210,20 @@ class _ItemsState extends State<Items> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(13))),
                                   child: IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        savedata({
+                                          'name': vegg['name'] ?? '',
+                                          'image': vegg['image'] ?? '',
+                                          'price': vegg['price'] ?? '',
+                                        });
+                                        Navigator.pop(context);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                              "${vegg['name']} added to cart"),
+                                          duration: Duration(seconds: 2),
+                                        ));
+                                      },
                                       icon: Icon(
                                         Icons.add,
                                         color: Colors.white,

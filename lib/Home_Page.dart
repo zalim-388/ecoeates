@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecoeates/items.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -138,7 +141,7 @@ class _HomePageState extends State<HomePage> {
       "image": "image/Group 6837.png",
     }
   ];
-bool fav = false;
+  bool fav = false;
 
   // void favorite() {
   //   setState(() {
@@ -147,6 +150,9 @@ bool fav = false;
   // }
 
   Set<String> favoriteItems = {};
+
+  
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> imageSliders = imgList
@@ -171,6 +177,7 @@ bool fav = false;
           ),
         ),
         child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
               const SizedBox(height: 40),
@@ -282,7 +289,8 @@ bool fav = false;
                           itemBuilder: (context, index) {
                             final item = categories[index];
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
                               child: Column(
                                 children: [
                                   SizedBox(
@@ -291,7 +299,7 @@ bool fav = false;
                                   GestureDetector(
                                     onTap: () {
                                       print(item['name']);
-                  
+
                                       print(item['items']);
                                       Navigator.push(
                                           context,
@@ -306,7 +314,8 @@ bool fav = false;
                                       backgroundColor: Colors.red,
                                       radius: 35,
                                       child: CircleAvatar(
-                                        backgroundColor: Colors.deepPurpleAccent,
+                                        backgroundColor:
+                                            Colors.deepPurpleAccent,
                                         radius: 30,
                                         child: Image.asset(
                                           item['image'] ?? '',
@@ -340,115 +349,119 @@ bool fav = false;
                       GridView.builder(
                           shrinkWrap: true,
                           itemCount: categories.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10,
                           ),
                           itemBuilder: (Context, index) {
                             final item = categories[index];
-                             return Container(
-                          height: 300,
-                          width: 200,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  height: 100,
-                                  width: 200,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xFFC3B2FF),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(
-                                            20,
+                            return Container(
+                              height: 300,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                      height: 100,
+                                      width: 200,
+                                      decoration: BoxDecoration(
+                                          color: Color(0xFFC3B2FF),
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(
+                                                20,
+                                              ),
+                                              topRight: Radius.circular(20))),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 120),
+                                            child: IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  String itemName =
+                                                      item['name'] ?? '';
+                                                  if (favoriteItems
+                                                      .contains(itemName)) {
+                                                    favoriteItems
+                                                        .remove(itemName);
+                                                  } else {
+                                                    favoriteItems.add(itemName);
+                                                  }
+                                                });
+                                              },
+                                              icon: Icon(
+                                                  favoriteItems.contains(
+                                                          item['name'] ?? '')
+                                                      ? Icons.favorite
+                                                      : Icons.favorite_border,
+                                                  size: 20,
+                                                  color: favoriteItems.contains(
+                                                          item['name'] ?? '')
+                                                      ? Colors.deepPurpleAccent
+                                                      : Colors.deepPurple),
+                                            ),
                                           ),
-                                          topRight: Radius.circular(20))),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 120),
+                                          Center(
+                                            child: Image.asset(
+                                              item['image'] ?? '',
+                                              height: 50,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        item['name'] ?? '',
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.black),
+                                      ),
+                                    ),
+                                    //5star
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        item['price'] ?? '',
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            color: Colors.purple.shade800),
+                                      ),
+                                    ),
+
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 120),
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            color: Colors.deepPurpleAccent,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(13))),
                                         child: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              String itemName =
-                                                  item['name'] ?? '';
-                                              if (favoriteItems
-                                                  .contains(itemName)) {
-                                                favoriteItems.remove(itemName);
-                                              } else {
-                                                favoriteItems.add(itemName);
-                                              }
-                                            });
-                                          },
-                                          icon: Icon(
-                                              favoriteItems.contains(
-                                                      item['name'] ?? '')
-                                                  ? Icons.favorite
-                                                  : Icons.favorite_border,
-                                              size: 20,
-                                              color: favoriteItems.contains(
-                                                      item['name'] ?? '')
-                                                  ? Colors.deepPurpleAccent
-                                                  : Colors.deepPurple),
-                                        ),
+                                            onPressed: () {},
+                                            icon: Icon(
+                                              Icons.add,
+                                              color: Colors.white,
+                                            )),
                                       ),
-                                      Center(
-                                        child: Image.asset(
-                                          item['image'] ?? '',
-                                          height: 50,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    item['name'] ?? '',
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.black),
-                                  ),
-                                ),
-                                //5star
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    item['price'] ?? '',
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        color: Colors.purple.shade800),
-                                  ),
-                                ),
-                  
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 120),
-                                  child: Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                        color: Colors.deepPurpleAccent,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(13))),
-                                    child: IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.add,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                              ),
+                            );
                           })
                     ],
                   ),
