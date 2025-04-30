@@ -1,7 +1,7 @@
 import 'dart:convert';
+
 import 'package:ecoeates/ui/checkoutpage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartPage extends StatefulWidget {
@@ -43,7 +43,8 @@ class _CartPageState extends State<CartPage> {
       if (item["price"] is num) {
         total += (item['price'] as num).toDouble();
       } else {
-        String priceStr = item['price'].toString().replaceAll('₹', '');
+        String priceStr =
+            item['price'].toString().replaceAll(RegExp(r'[^\d.]'), '');
         total += double.tryParse(priceStr) ?? 0.0;
       }
     }
@@ -88,9 +89,8 @@ class _CartPageState extends State<CartPage> {
                             color: Colors.purple.shade900),
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    const Icon(Icons.location_on_outlined, color: Colors.white),
-                    const Text('Cart',
+                    const SizedBox(width: 60),
+                    Text('Cart',
                         style: TextStyle(fontSize: 17, color: Colors.white)),
                     const Spacer(),
                     IconButton(
@@ -108,7 +108,7 @@ class _CartPageState extends State<CartPage> {
               // Cart List
               Expanded(
                 child: cartItems.isEmpty
-                    ? const Center(
+                    ? Center(
                         child: Text(
                           "Your cart is empty!",
                           style: TextStyle(color: Colors.white, fontSize: 18),
@@ -127,7 +127,7 @@ class _CartPageState extends State<CartPage> {
                                       width: 50, height: 50, fit: BoxFit.cover)
                                   : const Icon(Icons.image_not_supported),
                               title: Text(item['name'] ?? 'Unnamed'),
-                              subtitle: Text("₹${item['price'].toString()}"),
+                              subtitle: Text("${item['price'].toString()}"),
                               trailing: IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () => removeItem(index),
@@ -157,7 +157,7 @@ class _CartPageState extends State<CartPage> {
                               color: Colors.purple.shade900),
                         ),
                         const Spacer(),
-                        Text("${itemTotal.toStringAsFixed(2)}",
+                        Text("₹${itemTotal.toStringAsFixed(2)}",
                             style: const TextStyle(
                                 fontSize: 18, color: Colors.black)),
                       ],
@@ -197,16 +197,15 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
 
-              // Checkout Button
               Container(
                 height: 90,
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(20),
-                  ),
+                  // borderRadius: BorderRadius.vertical(
+                  //   bottom: Radius.circular(20),
+                  // ),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -231,7 +230,8 @@ class _CartPageState extends State<CartPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Checkoutpage()),
+                                      builder: (context) => Checkoutpage(
+                                          totalAmount: totalAmount)),
                                 );
                               },
                         child: const Text("Checkout",
