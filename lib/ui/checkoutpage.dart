@@ -29,18 +29,52 @@ class _CheckoutpageState extends State<Checkoutpage> {
   }
 
   void _handlepaymentsuccess(PaymentSuccessResponse response) {
+    showPaymentSuccessDialog(context, "12345");
     print('payment successful:l${response.paymentId}');
   }
 
   void _handlepaymentError(PaymentFailureResponse response) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+        "payment Faild:${response.message}",
+      ),
+      backgroundColor: Colors.red,
+    ));
+
     print('payment error:l${response.code} - ${response.message}');
   }
 
   void _handleexternalwallet(ExternalWalletResponse response) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("External Wallet: ${response.walletName}")));
     print('external wallet:l${response.walletName}');
   }
 
+  void _openCheckout() {
+    var options = {
+      'key': '', // Replace with your Razorpay Test/Live Key
+      'amount': (widget.totalAmount * 100).toInt(), // in paise (i.e. Rs 500)
+      'name': 'eco eates',
+      'decription': 'Thankyou',
+      'prefill': {'contact': '9562791690', 'email': "zaalim388@gmail.com"},
+      'extrnal': {
+        'wallet': ['paytm']
+      },
+    };
+    try {
+      _razorpay.open(options);
+    } catch (e, stackTrace) {
+      debugPrint('Razorpay open error: $e');
+      debugPrintStack(stackTrace: stackTrace);
+    }
+  }
+
   @override
+  void dispose() {
+    super.dispose();
+    _razorpay.clear();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -89,7 +123,7 @@ class _CheckoutpageState extends State<Checkoutpage> {
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(20),
                     ),
-                    color: Colors.white12,
+                    color: Colors.white70,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,50 +292,57 @@ class _CheckoutpageState extends State<Checkoutpage> {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 100.h,
-                      ),
+                      Spacer(),
                       Container(
                         height: 90.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
                           color: Colors.white,
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "Total Amount",
-                                  style: TextStyle(color: Colors.purple),
-                                ),
-                                Text(
-                                    "₹${widget.totalAmount.toStringAsFixed(2)}",
-                                    style: const TextStyle(
-                                        fontSize: 18, color: Colors.black)),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 40.w,
-                            ),
-                            SizedBox(
-                              height: 50.h,
-                              width: 160.w,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.purple,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
-                                ),
-                                onPressed: () {
-                                  showPaymentSuccessDialog(context, "12345");
-                                },
-                                child: Text("payment",
-                                    style: TextStyle(color: Colors.white)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  Text(
+                                    "Total Amount",
+                                    style: TextStyle(color: Colors.purple),
+                                  ),
+                                  Text(
+                                      "₹${widget.totalAmount.toStringAsFixed(2)}",
+                                      style: const TextStyle(
+                                          fontSize: 18, color: Colors.black)),
+                                ],
                               ),
-                            )
-                          ],
+                              Spacer(),
+                              // SizedBox(
+                              //   width: 100.w,
+                              // ),
+                              SizedBox(
+                                height: 50.h,
+                                width: 160.w,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.purple,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                  ),
+                                  onPressed: () {
+                                    _openCheckout();
+                                  },
+                                  child: Text("payment",
+                                      style: TextStyle(color: Colors.white)),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -319,7 +360,7 @@ class _CheckoutpageState extends State<Checkoutpage> {
 void showPaymentSuccessDialog(BuildContext context, String orderId) {
   showDialog(
     context: context,
-    barrierDismissible: false, // Tap outside won't dismiss
+    barrierDismissible: false,
     builder: (context) {
       return Dialog(
         shape: RoundedRectangleBorder(
@@ -335,25 +376,19 @@ void showPaymentSuccessDialog(BuildContext context, String orderId) {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CircleAvatar(
-                  radius: 40,
-                  child: Image.asset(
-                    "image/Group 18.png",
-                    fit: BoxFit.contain,
-                  )),
-              const SizedBox(height: 20),
-
-              // Title
-              const Text(
+              Image.asset(
+                "image/Group 18.png",
+                fit: BoxFit.contain,
+              ),
+              SizedBox(height: 20),
+              Text(
                 "Order Successful",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
                 ),
               ),
-
               const SizedBox(height: 10),
-
               Text(
                 "Your Order #$orderId is Successfully Placed",
                 style: const TextStyle(
@@ -362,9 +397,7 @@ void showPaymentSuccessDialog(BuildContext context, String orderId) {
                 ),
                 textAlign: TextAlign.center,
               ),
-
               const SizedBox(height: 30),
-
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurpleAccent,
@@ -376,17 +409,13 @@ void showPaymentSuccessDialog(BuildContext context, String orderId) {
                 ),
                 onPressed: () {
                   Navigator.pop(context);
-                  // Add your logic for "Track My Order"
                 },
                 child: const Text(
                   "Track My Order",
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
-
               const SizedBox(height: 15),
-
-              // Go Back Button
               OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -398,7 +427,6 @@ void showPaymentSuccessDialog(BuildContext context, String orderId) {
                 ),
                 onPressed: () {
                   Navigator.pop(context);
-                  // Add your logic for going back
                 },
                 child: const Text(
                   "Go Back",

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -16,13 +17,36 @@ class Items extends StatefulWidget {
 class _ItemsState extends State<Items> {
   bool fav = false;
 
-  // void favorite() {
-  //   setState(() {
-  //     fav = !fav;
-  //   });
-  // }
+  void isfavorite() {
+    setState(() {
+      fav = !fav;
+    });
+  }
 
-  Set<String> favoriteItems = {};
+ void initState() {
+    super.initState();
+    // Initialize favorite status for all items
+ 
+  }
+
+  List<Map<String, dynamic>> favoriteItems = [];
+
+  Future<void> Likesave(Map<String, String> item) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    List<String> updatelike =
+        favoriteItems.map((item) => jsonEncode(item)).toList();
+
+    await prefs.setStringList("favproduct", updatelike);
+  }
+
+Future<void> loadlike()async{
+final prefs= await SharedPreferences.getInstance();
+ List<String> savedFavorites = prefs.getStringList("favproduct") ?? [];
+
+
+}
+
 
   Future<void> savedata(Map<String, String> cart) async {
     final prefs = await SharedPreferences.getInstance();
@@ -149,27 +173,21 @@ class _ItemsState extends State<Items> {
                                       padding: const EdgeInsets.only(left: 120),
                                       child: IconButton(
                                         onPressed: () {
-                                          setState(() {
-                                            String itemName =
-                                                vegg['name'] ?? '';
-                                            if (favoriteItems
-                                                .contains(itemName)) {
-                                              favoriteItems.remove(itemName);
-                                            } else {
-                                              favoriteItems.add(itemName);
-                                            }
+                                          isfavorite();
+                                          Likesave({
+                                            'name': vegg['name'] ?? '',
+                                            'image': vegg['image'] ?? '',
+                                            'price': vegg['price'] ?? '',
                                           });
                                         },
                                         icon: Icon(
-                                            favoriteItems.contains(
-                                                    vegg['name'] ?? '')
-                                                ? Icons.favorite
-                                                : Icons.favorite_border,
-                                            size: 20,
-                                            color: favoriteItems.contains(
-                                                    vegg['name'] ?? '')
-                                                ? Colors.deepPurpleAccent
-                                                : Colors.deepPurple),
+                                          fav
+                                              ? Icons.favorite
+                                              : Icons.favorite_border_outlined,
+                                          color: fav
+                                              ? Colors.purple
+                                              : Colors.purple.shade900,
+                                        ),
                                       ),
                                     ),
                                     Center(

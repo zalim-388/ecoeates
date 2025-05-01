@@ -2,7 +2,6 @@ import 'package:circle_bottom_navigation/circle_bottom_navigation.dart';
 import 'package:circle_bottom_navigation/widgets/tab_data.dart';
 import 'package:ecoeates/ui/Home_Page.dart';
 import 'package:ecoeates/ui/Like_page.dart';
-
 import 'package:ecoeates/ui/cart_page.dart';
 import 'package:ecoeates/ui/profile.dart';
 import 'package:flutter/material.dart';

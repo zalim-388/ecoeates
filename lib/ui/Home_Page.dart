@@ -141,15 +141,7 @@ class _HomePageState extends State<HomePage> {
       "image": "image/Group 6837.png",
     }
   ];
-  bool fav = false;
 
-  // void favorite() {
-  //   setState(() {
-  //     fav = !fav;
-  //   });
-  // }
-
-  Set<String> favoriteItems = {};
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +167,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
+           
             child: Column(children: [
               const SizedBox(
                 height: 40,
@@ -259,206 +251,180 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CarouselSlider(
-                      items: imageSliders,
-                      options: CarouselOptions(
-                        autoPlay: true,
-                        enlargeCenterPage: true,
-                        aspectRatio: 2.0,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Categories',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      height: 120,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: categories.length,
-                        itemBuilder: (context, index) {
-                          final item = categories[index];
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    print(item['name']);
-
-                                    print(item['items']);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => Items(
-                                            categories: item['name'],
-                                            Item: item['Items'],
-                                          ),
-                                        ));
-                                  },
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.red,
-                                    radius: 35,
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.deepPurpleAccent,
-                                      radius: 30,
-                                      child: Image.asset(
-                                        item['image'] ?? '',
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  item['name'] ?? '',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Popular',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: categories.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CarouselSlider(
+                        items: imageSliders,
+                        options: CarouselOptions(
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                          aspectRatio: 2.0,
                         ),
-                        itemBuilder: (Context, index) {
-                          final item = categories[index];
-                          return Container(
-                            height: 300,
-                            width: 200,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Categories',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        height: 120,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: categories.length,
+                          itemBuilder: (context, index) {
+                            final item = categories[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Column(
                                 children: [
                                   SizedBox(
-                                    height: 5,
+                                    width: 20,
                                   ),
-                                  Container(
-                                    height: 100,
-                                    width: 200,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFFC3B2FF),
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(
-                                              20,
+                                  GestureDetector(
+                                    onTap: () {
+                                      print(item['name']);
+                  
+                                      print(item['items']);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Items(
+                                              categories: item['name'],
+                                              Item: item['Items'],
                                             ),
-                                            topRight: Radius.circular(20))),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 120),
-                                          child: IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                String itemName =
-                                                    item['name'] ?? '';
-                                                if (favoriteItems
-                                                    .contains(itemName)) {
-                                                  favoriteItems
-                                                      .remove(itemName);
-                                                } else {
-                                                  favoriteItems.add(itemName);
-                                                }
-                                              });
-                                            },
-                                            icon: Icon(
-                                                favoriteItems.contains(
-                                                        item['name'] ?? '')
-                                                    ? Icons.favorite
-                                                    : Icons.favorite_border,
-                                                size: 20,
-                                                color: favoriteItems.contains(
-                                                        item['name'] ?? '')
-                                                    ? Colors.deepPurpleAccent
-                                                    : Colors.deepPurple),
-                                          ),
+                                          ));
+                                    },
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.red,
+                                      radius: 35,
+                                      child: CircleAvatar(
+                                        backgroundColor: Colors.deepPurpleAccent,
+                                        radius: 30,
+                                        child: Image.asset(
+                                          item['image'] ?? '',
+                                          fit: BoxFit.contain,
                                         ),
-                                        Center(
-                                          child: Image.asset(
-                                            item['image'] ?? '',
-                                            height: 50,
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      item['name'] ?? '',
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.black),
-                                    ),
-                                  ),
-                                  //5star
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      item['price'] ?? '',
-                                      style: TextStyle(
-                                          fontSize: 17,
-                                          color: Colors.purple.shade800),
-                                    ),
-                                  ),
-
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 120),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                          color: Colors.deepPurpleAccent,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(13))),
-                                      child: IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.add,
-                                            color: Colors.white,
-                                          )),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    item['name'] ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                          );
-                        })
-                  ],
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Popular',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      GridView.builder(
+                          shrinkWrap: true,
+                          itemCount: categories.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          itemBuilder: (Context, index) {
+                            final item = categories[index];
+                            return Container(
+                              height: 300,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                      height: 100,
+                                      width: 200,
+                                      decoration: BoxDecoration(
+                                          color: Color(0xFFC3B2FF),
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(
+                                                20,
+                                              ),
+                                              topRight: Radius.circular(20))),
+                                      child: Column(
+                                        children: [
+                                   
+                                          Center(
+                                            child: Image.asset(
+                                              item['image'] ?? '',
+                                              height: 50,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        item['name'] ?? '',
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.black),
+                                      ),
+                                    ),
+                                    //5star
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        item['price'] ?? '',
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            color: Colors.purple.shade800),
+                                      ),
+                                    ),
+                  
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 120),
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            color: Colors.deepPurpleAccent,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(13))),
+                                        child: IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(
+                                              Icons.add,
+                                              color: Colors.white,
+                                            )),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          })
+                    ],
+                  ),
                 ),
               ),
             ]),
