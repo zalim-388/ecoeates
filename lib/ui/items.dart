@@ -15,38 +15,63 @@ class Items extends StatefulWidget {
 }
 
 class _ItemsState extends State<Items> {
-  bool fav = false;
-
-  void isfavorite() {
-    setState(() {
-      fav = !fav;
-    });
-  }
-
- void initState() {
-    super.initState();
-    // Initialize favorite status for all items
- 
-  }
-
-  List<Map<String, dynamic>> favoriteItems = [];
+// Like
+  Set<String> likedItems = {};
 
   Future<void> Likesave(Map<String, String> item) async {
     final prefs = await SharedPreferences.getInstance();
 
     List<String> updatelike =
-        favoriteItems.map((item) => jsonEncode(item)).toList();
+        likedItems.map((item) => jsonEncode(item)).toList();
 
     await prefs.setStringList("favproduct", updatelike);
   }
 
-Future<void> loadlike()async{
-final prefs= await SharedPreferences.getInstance();
- List<String> savedFavorites = prefs.getStringList("favproduct") ?? [];
+  Future<void> _loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedFavorites = prefs.getStringList("favproduct") ?? [];
 
+    final loadedItems =
+        savedFavorites.map((itemJson) => jsonDecode(itemJson)).toList();
 
-}
+    setState(() {
+      likedItems = loadedItems
+          .map<String>((item) => item['name']?.toString() ?? '')
+          .toSet();
+    });
+  }
 
+  Future<void> toggleFavorite(Map<String, dynamic> item) async {
+    final prefs = await SharedPreferences.getInstance();
+    final name = item['name'] ?? '';
+
+    setState(() {
+      if (likedItems.contains(name)) {
+        likedItems.remove(name);
+      } else {
+        likedItems.add(name);
+      }
+    });
+
+    final favoriteItems = likedItems
+        .map((name) => widget.Item.firstWhere((e) => e['name'] == name))
+        .map((item) => jsonEncode({
+              'name': item['name'],
+              'image': item['image'],
+              'price': item['price'],
+            }))
+        .toList();
+
+    await prefs.setStringList("favproduct", favoriteItems);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavorites();
+  }
+
+  // cart
 
   Future<void> savedata(Map<String, String> cart) async {
     final prefs = await SharedPreferences.getInstance();
@@ -173,20 +198,16 @@ final prefs= await SharedPreferences.getInstance();
                                       padding: const EdgeInsets.only(left: 120),
                                       child: IconButton(
                                         onPressed: () {
-                                          isfavorite();
-                                          Likesave({
-                                            'name': vegg['name'] ?? '',
-                                            'image': vegg['image'] ?? '',
-                                            'price': vegg['price'] ?? '',
-                                          });
+                                          toggleFavorite(vegg);
                                         },
                                         icon: Icon(
-                                          fav
+                                          likedItems.contains(vegg['name'])
                                               ? Icons.favorite
                                               : Icons.favorite_border_outlined,
-                                          color: fav
-                                              ? Colors.purple
-                                              : Colors.purple.shade900,
+                                          color:
+                                              likedItems.contains(vegg['name'])
+                                                  ? Colors.purple
+                                                  : Colors.purple.shade900,
                                         ),
                                       ),
                                     ),

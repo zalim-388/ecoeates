@@ -45,7 +45,8 @@ dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "image/eco.png"
+  image_path: "image/logo icon.png"
+  adaptive_icon_background: "#7B4FFF"
 
 dev_dependencies:
   flutter_test:

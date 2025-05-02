@@ -1,5 +1,3 @@
-import 'package:circle_bottom_navigation/circle_bottom_navigation.dart';
-import 'package:circle_bottom_navigation/widgets/tab_data.dart';
 import 'package:ecoeates/ui/Home_Page.dart';
 import 'package:ecoeates/ui/Like_page.dart';
 import 'package:ecoeates/ui/cart_page.dart';
@@ -26,47 +24,62 @@ class BottomnavState extends State<Bottomnav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     
       body: _pages[currentPage],
-      bottomNavigationBar: CircleBottomNavigation(
-        barHeight: 70.h,
-        circleSize: 50,
-        initialSelection: currentPage,
-        inactiveIconColor: Colors.purple.shade900,
-        textColor: Colors.black,
-        hasElevationShadows: false,
-        barBackgroundColor: Colors.white,
-        circleColor: Colors.purple.shade900,
-        tabs: [
-          TabData(
-            icon: Icons.home,
-            iconSize: 35,
-            title: 'Home',
-            fontSize: 19,
-            fontWeight: FontWeight.bold,
+
+      bottomNavigationBar: Container(
+        height: 70.h,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            top: BorderSide(
+              color: Colors.grey.shade300,
+              width: 1.0,
+            ),
           ),
-          TabData(
-            icon: Icons.favorite_border_outlined,
-            iconSize: 35,
-            title: 'favorite',
-            fontSize: 19,
-            fontWeight: FontWeight.bold,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildNavItem(0, Icons.home, 'Home'),
+            _buildNavItem(1, Icons.favorite_border_outlined, 'Favorite'),
+            _buildNavItem(2, Icons.shopping_cart_outlined, 'Cart'),
+            _buildNavItem(3, Icons.person_outline_outlined, 'Profile'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(int index, IconData icon, String label) {
+    final bool isSelected = currentPage == index;
+    
+    return InkWell(
+      onTap: () {
+        setState(() {
+          currentPage = index;
+        });
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Icon with conditional styling
+          Icon(
+            icon,
+            size: 30,
+            color: isSelected ? Colors.purple.shade900 : Colors.grey,
           ),
-          TabData(
-            icon: Icons.shopping_cart_outlined,
-            iconSize: 35,
-            title: 'cart',
-            fontSize: 19,
-            fontWeight: FontWeight.bold,
-          ),
-          TabData(
-            icon: Icons.person_outline_outlined,
-            iconSize: 35,
-            title: 'profile',
-            fontSize: 19,
-            fontWeight: FontWeight.bold,
+          
+          // Text label
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: isSelected ? Colors.purple.shade900 : Colors.grey,
+            ),
           ),
         ],
-        onTabChangedListener: (index) => setState(() => currentPage = index),
       ),
     );
   }
